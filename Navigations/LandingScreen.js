@@ -30,12 +30,12 @@ const LandingScreen = ({navigation,props}) => {
   const [first,setFirst]= useState('');
   const [second,setSecond]= useState('');
   const [third,setThird]= useState('');
-  const [data,setData]=useState([]);
+  const [data,setData]=useState([null]);
   useEffect(() => {
     getData();
      
     }, [])
-    const getData =async()=>{
+    const getData = async()=>{
       try {
         const value = JSON.parse(await AsyncStorage.getItem('title'))
         console.log(value,'stored value')
@@ -77,13 +77,13 @@ const LandingScreen = ({navigation,props}) => {
     <TouchableOpacity  key={i} style={{backgroundColor:'white',margin:15,borderRadius:15,padding:10,elevation:1}} onPress={()=>navigation.navigate('Form',{item:item,fresh:false} )}>
 
   <TextDesc>
-   Name Of Company:{item.title}
+   Name Of Company:{data[0]?item.title:'hello'}
   </TextDesc>
   <TextDesc>
-  Email:{item.email}
+  Email:{data[0]?item.email:'hello'}
   </TextDesc>
   <TextDesc>
-  Phone:{item.contact}
+  Phone:{data[0]?item.contact:'hello'}
   </TextDesc>
 
 
@@ -92,11 +92,16 @@ const LandingScreen = ({navigation,props}) => {
 
 </ScrollView>
 <Card >
-<PressableStyled onPress={()=>navigation.navigate('Form',{item:data,fresh:true})}>
+{data&&<PressableStyled onPress={()=>{console.log('hi');navigation.navigate('Form',{item:data,fresh:true})}}>
   <TextSmall>
     Add Organization
   </TextSmall>
-</PressableStyled>
+</PressableStyled>}
+{!data&&<PressableStyled onPress={()=>navigation.navigate('Form',{fresh:true})}>
+  <TextSmall>
+    Add Organization
+  </TextSmall>
+</PressableStyled>}
 </Card>
 </View>
     );

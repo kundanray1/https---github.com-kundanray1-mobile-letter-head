@@ -47,17 +47,18 @@ const Form = ({ route, navigation }) => {
  const [success,setSuccess]= useState(false);
 // const [image,setImage]= useState(require(filePath));
 const { item,fresh } = route.params;
-useEffect(() => {
-   
-getData();
+// useEffect(() => {
+//    console.log('hi')
+// getData();
 
-}, [loading])
+// }, [loading])s
 
-const [dsata,setData]=useState([item]);
+const [data,setData]=useState(item);
 console.log(data,'old values from older screen')
 
 // console.log(item.moto,'tramsfered data')
 const getData =async()=>{
+  console.log(fresh,'passed fresh value')
   try {
   if(!fresh){
    
@@ -186,17 +187,15 @@ const getData =async()=>{
 
   const printHTML = async () => {
     let formdata=[{title:title, moto:moto,company:companyName,subject:subject,body:body,location:location, contact:contact,email:email, first:first,second:second,third:third,path:filePath}]
-   let value = JSON.stringify(formdata)
-   setNewdata(formdata);
-   if(item===null){
-    setData(newdata)
-   }
-   else{
-    setData(...item,...newdata)
-   }
+   let value = await JSON.stringify(formdata)
+  //  setData(formdata);
+   console.log(formdata,'checking passed data')
+  let concated=[...data,...formdata]
+    setData(concated)
+   
    
    console.log(JSON.stringify(data),'concated')
-   if(fresh){
+   
     AsyncStorage.setItem('title',JSON.stringify(data), (err)=> {
       if(err){
         console.log("an error");
@@ -206,7 +205,7 @@ const getData =async()=>{
       setSuccess(true);
     }).catch((err)=> {
         console.log("error is: " + err);
-    });}
+    });
 
 
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
