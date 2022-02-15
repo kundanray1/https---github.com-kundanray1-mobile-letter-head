@@ -2,7 +2,7 @@
 // https://aboutreact.com/react-native-print-html/
 
 // Import React
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 // Import required components
 import {
   SafeAreaView,
@@ -29,62 +29,62 @@ import {
 } from 'react-native-image-picker';
 import header from '../header.png';
 const Form = ({ route, navigation }) => {
-  const [loading,setLoading]= useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedPrinter, setSelectedPrinter] = useState(null);
-  const [title,setTitle]= useState('');
-  const [moto,setMoto]= useState('');
+  const [title, setTitle] = useState('');
+  const [moto, setMoto] = useState('');
   const [filePath, setFilePath] = useState('https://ml8qg8gly5yz.i.optimole.com/ob22pAI-ELoYPrSx/w:100/h:100/q:auto/rt:fill/g:ce/https://nepalsouq.com/wp-content/uploads/2021/05/cropped-Asset-1-e1621914238173.png');
-  const [companyName,setCompanyName]= useState('');
-  const [subject,setSubject]= useState('');
-  const [body,setBody]= useState('');
-  const [location,setLocation]= useState('');
-  const [contact,setContact]= useState('');
-  const [email,setEmai]= useState('');
-  const [first,setFirst]= useState('');
-  const [second,setSecond]= useState('');
-  const [third,setThird]= useState('');
- const [newdata,setNewdata]=useState([]);
- const [success,setSuccess]= useState(false);
-// const [image,setImage]= useState(require(filePath));
-const { item,fresh } = route.params;
-useEffect(() => {
-  
-   console.log('hi')
-getData();
+  const [companyName, setCompanyName] = useState('');
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
+  const [location, setLocation] = useState('');
+  const [contact, setContact] = useState('');
+  const [email, setEmai] = useState('');
+  const [first, setFirst] = useState('');
+  const [second, setSecond] = useState('');
+  const [third, setThird] = useState('');
+  const [newdata, setNewdata] = useState([]);
+  const [success, setSuccess] = useState(false);
+  // const [image,setImage]= useState(require(filePath));
+  const { item, fresh } = route.params;
+  useEffect(() => {
 
-}, [loading])
+    console.log('hi')
+    getData();
 
-const [data,setData]=useState(item);
-console.log(data,'old values from older screen')
+  }, [loading])
 
-// console.log(item.moto,'tramsfered data')
-const getData =async()=>{
-  console.log(fresh,'passed fresh value')
-  try {
-  if(!fresh){
-   
-      // value previously stored
-// console.log(item,'old values')
+  const [data, setData] = useState(item);
+  console.log(data, 'old values from older screen')
 
-      setTitle(data.title);
-      setMoto(data.moto);
-      setCompanyName(data.company);
-      setSubject(data.subject);
-      setBody(data.body);
-      setLocation(data.location);
-      setContact(data.contact);
-      setEmai(data.email);
-      setFirst(data.first);
-      setSecond(data.second);
-      setThird(data.third);
-      setFilePath(data.path)
+  // console.log(item.moto,'tramsfered data')
+  const getData = async () => {
+    console.log(fresh, 'passed fresh value')
+    try {
+      if (!fresh) {
 
+        // value previously stored
+        // console.log(item,'old values')
+
+        setTitle(data.title);
+        setMoto(data.moto);
+        setCompanyName(data.company);
+        setSubject(data.subject);
+        setBody(data.body);
+        setLocation(data.location);
+        setContact(data.contact);
+        setEmai(data.email);
+        setFirst(data.first);
+        setSecond(data.second);
+        setThird(data.third);
+        setFilePath(data.path)
+
+      }
+    } catch (e) {
+      // error reading value
     }
-  } catch(e) {
-    // error reading value
-  }
 
-}
+  }
 
 
   const requestCameraPermission = async () => {
@@ -127,7 +127,7 @@ const getData =async()=>{
   };
 
 
-  const chooseFile = async(type) => {
+  const chooseFile = async (type) => {
     let options = {
       mediaType: type,
       maxWidth: 300,
@@ -135,11 +135,11 @@ const getData =async()=>{
       quality: 1,
     };
 
-   launchImageLibrary(options, async(response) => {
-      
-    const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-    const read =  await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
-    console.log(granted,'check permission')
+    launchImageLibrary(options, async (response) => {
+
+      const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+      const read = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+      console.log(granted, 'check permission')
       console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -163,15 +163,15 @@ const getData =async()=>{
       console.log('type -> ', response.type);
       console.log('fileName -> ', response.fileName);
       setFilePath(response.assets[0].uri);
-      
+
     });
   };
 
 
   // Only for iOS
   const selectPrinter = async () => {
-    const selectedPrinter = 
-      await RNPrint.selectPrinter({x: 100, y: 100});
+    const selectedPrinter =
+      await RNPrint.selectPrinter({ x: 100, y: 100 });
     setSelectedPrinter(selectedPrinter);
   };
 
@@ -186,200 +186,479 @@ const getData =async()=>{
     });
   };
 
-  const printHTML = async() => {
-    let formdata=[{title:title, moto:moto,company:companyName,subject:subject,body:body,location:location, contact:contact,email:email, first:first,second:second,third:third,path:filePath}]
-  //  let value = await JSON.stringify(formdata)
-  //  setData(formdata);
-   console.log(data,'previous value')
-  if(fresh){
-    
-    let concated= data==null?formdata:[...data,...formdata]
-    setData(concated)
-   
-   
-   console.log(JSON.stringify(data),'concated')
+  const printHTML = async () => {
+    let formdata = [{ title: title, moto: moto, company: companyName, subject: subject, body: body, location: location, contact: contact, email: email, first: first, second: second, third: third, path: filePath }]
+    //  let value = await JSON.stringify(formdata)
+    //  setData(formdata);
+    console.log(data, 'previous value')
+    if (fresh) {
 
-    await AsyncStorage.setItem('title',JSON.stringify(data), (err)=> {
-      if(err){
-        console.log("an error");
-        throw err;
-      }
-      console.log("success");
-      setSuccess(true);
-    }).catch((err)=> {
+      let concated = data == null ? formdata : [...data, ...formdata]
+      setData(concated)
+
+
+      console.log(JSON.stringify(data), 'concated')
+
+      await AsyncStorage.setItem('title', JSON.stringify(data), (err) => {
+        if (err) {
+          console.log("an error");
+          throw err;
+        }
+        console.log("success");
+        setSuccess(true);
+      }).catch((err) => {
         console.log("error is: " + err);
-    });}
+      });
+    }
 
 
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-    const read =  await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
-// console.log(granted,'check permission')
-    if(success||!fresh){ let address=RNPrint.print({
-      html:`
-      <head>
-      <title>Pdf Content</title>
-      <style>
-      * {
-      box-sizing: border-box;
-    }
-    
-    html {
-      font-family: sans-serif;
-    }
-    
-    body {
-      margin: 0;
-      justify-content:flex-start;
-      background: white;
-    }
-    .company{
-      width: 50%;
-      position: absolute;
-      top: 23mm;
-      left: 46mm;
-      display: flex;
-      flex-direction: column;
-      align-items: baseline;
-  }
-        
-    
-    .subject h4{
-      display: flex;
-      align-items: center;
-      top:60mm;
-      position:absolute;
-      width:100%;
-      margin:20mm;
-    
-      text-decoration: underline;
-    
-    }
-    .content {
-        position:absolute;
-      top: 70mm;
-      background: white;
-      width:180mm;
-      margin:20mm;
-      align-text:center;
-    }
-    article {
-      width: 100%;
-      height: 100%;
-     
-      position: absolute;
-    }
-    
-    address {
-      position: absolute;
-      
-      flex-direction: row;
-      bottom: 20mm;
-      right:20mm;
-    }
-    
-    .logo img {
-      position: absolute;
-      top: 16mm;
-      left: 10mm;
-      width: 128px;
-      height: 128px;
-      font-size: 20px;
-      letter-spacing: 1px;
-      text-align: center;
-      padding: 0px 0;
-      color: black;
-      text-shadow: black;
-    }
-    
-    h3 {
-      position: absolute;
-      top: 50mm;
-      left: 20mm;
-      width: 100%;
-     
-      font-size: 20px;
-      letter-spacing: 1px;
-      text-align: center;
-    
-      color: black;
-    
-    }
-    .company h1 {
-      letter-spacing: 0px;
-      text-align: center;
+    const read = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+    // console.log(granted,'check permission')
+    if (success || !fresh) {
+      let address = RNPrint.print({
+        //     html:`
+        //     <head>
+        //     <title>Pdf Content</title>
+        //     <style>
+        //     * {
+        //     box-sizing: border-box;
+        //   }
+
+        //   html {
+        //     font-family: sans-serif;
+        //   }
+
+        //   body {
+        //     margin: 0;
+        //     justify-content:flex-start;
+        //     background: white;
+        //   }
+        //   .company{
+        //     width: 50%;
+        //     position: absolute;
+        //     top: 23mm;
+        //     left: 46mm;
+        //     display: flex;
+        //     flex-direction: column;
+        //     align-items: baseline;
+        // }
+
+
+        //   .subject h4{
+        //     display: flex;
+        //     align-items: center;
+        //     top:60mm;
+        //     position:absolute;
+        //     width:100%;
+        //     margin:20mm;
+
+        //     text-decoration: underline;
+
+        //   }
+        //   .content {
+        //       position:absolute;
+        //     top: 70mm;
+        //     background: white;
+        //     width:180mm;
+        //     margin:20mm;
+        //     align-text:center;
+        //   }
+        //   article {
+        //     width: 100%;
+        //     height: 100%;
+
+        //     position: absolute;
+        //   }
+
+        //   address {
+        //     position: absolute;
+
+        //     flex-direction: row;
+        //     bottom: 20mm;
+        //     right:20mm;
+        //   }
+
+        //   .logo img {
+        //     position: absolute;
+        //     top: 16mm;
+        //     left: 10mm;
+        //     width: 128px;
+        //     height: 128px;
+        //     font-size: 20px;
+        //     letter-spacing: 1px;
+        //     text-align: center;
+        //     padding: 0px 0;
+        //     color: black;
+        //     text-shadow: black;
+        //   }
+
+        //   h3 {
+        //     position: absolute;
+        //     top: 50mm;
+        //     left: 20mm;
+        //     width: 100%;
+
+        //     font-size: 20px;
+        //     letter-spacing: 1px;
+        //     text-align: center;
+
+        //     color: black;
+
+        //   }
+        //   .company h1 {
+        //     letter-spacing: 0px;
+        //     text-align: center;
+        //   margin:0;
+        //   padding:0;
+        //     color: black;
+
+        //   }
+        //   .company h2 {
+        //     letter-spacing: 0px;
+        //     text-align: center;
+        //   margin:0;
+        //   padding:0;
+        //     color: grey;
+
+        //   }
+        //   p{
+        //     font-style: normal;
+        //     margin:0;
+        //   }
+
+        //   /* Your CSS below here */
+        //   article{
+        //     background:url(https://i.pinimg.com/564x/56/e3/63/56e363f8db0457bcb61ccebd388b3f84.jpg) no-repeat local;
+
+        //     background:url(https://raw.githubusercontent.com/mdn/learning-area/master/css/styling-boxes/letterheaded-paper-start/top-image.png) no-repeat local, url(https://raw.githubusercontent.com/mdn/learning-area/master/css/styling-boxes/letterheaded-paper-start/bottom-image.png) no-repeat 0 100% local, linear-gradient(to bottom, rgba(255, 230, 230, .9), #fff 0%, #fff 100%, rgba(255, 230, 230, .1 ));
+
+        //     border-top:0px solid #b30000;
+        //     border-bottom:0px solid #b30000;
+        //   }
+
+        //   .logo h1{
+        //     background:url(${header});
+
+
+        //   }
+        //     </style>
+        //     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+        //     </head>
+        //   <body>
+
+        //     <article>
+        //         <div class="logo">
+        //         <img src="${filePath}" alt="Lamp" >
+
+        //         </div>
+
+
+
+        //       <div class="company">
+        //           <h1>${title}</h1>
+        //           <h2>${moto}</h2>
+        //       </div>
+        //      <div class="subject">
+        //     <h4> ${subject}</h4>
+        //      </div>
+        //   <div class="content">
+        //   <p>
+        //   <p>${first}</p><br>
+        //   <p>${second}</p><br>
+        //   <p>${third}</p>
+        //   </p>
+        //   </div>
+        //       <address>
+        //       <div>
+        //         <p>${companyName}</p></div>
+        //         <div> <p>${location}</div>
+        //         <div> <p>${contact}</div>
+        //         <div> <p>${email}</div>
+        //       </address>
+        //     </article>
+        //   </body>`,
+
+
+
+
+        html: ` <head>
+  <title>Pdf Content</title>
+  <style>
+  * {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+  justify-content:flex-start;
+  background: white;
+}
+.company{
+text-align:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}  
+.company p{
+  line-height: 0px;
+  font-size:12px;
+}
+.logo p{
+  letter-spacing: 0px;
     margin:0;
     padding:0;
-      color: black;
+    
+}  
+.subject h5{
+  display: flex;
+color:#2baeff;
+text-align
+  width:100%;
+  text-decoration: underline;
+}
+.content {
+  background: white;
+  width:180mm;
+  margin:20mm;
+  align-text:center;
+        overflow: hidden;
+word-break: break-word !important;
+word-wrap: break-word !important;
+overflow-wrap: break-word !important;   
+}
+article {
+  width: 100%;
+  height: 100%;
+ 
+  position: absolute;
+}
+address {
+  
+  bottom: 20mm;
+  right:20mm;
+}
+.ref {
+  display: flex;
+flex-direction: row;
+justify-content: space-between;
+    }      
+.lettername{
+    min-width:100%;
+    align-self:center;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:#ed2415;
+    }
+.date{
+   text-align:end
+    } 
+.logo img {
+  top: 2mm;
+  left: 10mm;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+  padding: 0px 0;
+  color: black;
+  text-shadow: black;
+}
+.sign{
+  color:#c6db02;
+}
+.header{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:space-between;
+  padding:0px;
+  margin:0;
+}
+h3 {
+  position: absolute;
+  top: 50mm;
+  left: 20mm;
+  width: 100%;
+ 
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-align: center;
+
+  color: black;
+
+}
+.footercall{
+  padding: 5px;
+  color:#ed2415;
+  border: groove;
+  border-color:#2baeff;
+ 
+  text-align:center;
+ 
+} 
+.address u{
+    color:#2baeff;
+    }
+
+.thanks{
+  text-align:center;
+}
+p{
+  font-style: normal;
+  margin:0;
+}
+.note p {
+  color:#ed2415;}
+
+/* Your CSS below here */
+article{
+  // background:url(https://i.pinimg.com/564x/56/e3/63/56e363f8db0457bcb61ccebd388b3f84.jpg) no-repeat local;
+  
+  // background:url() no-repeat local, url() no-repeat 0 100% local, linear-gradient(to bottom, rgba(43, 174, 255, 1), #fff 0%, #fff 100%, rgba(255, 230, 230, .1 ));
+
+  border-top:0px solid #b30000;
+  border-bottom:0px solid #b30000;
+}
+
+.logo h1{
+  background:url(${header});
+
+  
+}
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  </head>
+<body>
+<div class="header">
+<div class="logo">
+<img src="${filePath}" alt="Lamp" >
+</div>
+<div class="company"><b>
+DHANA FINANCE PVT LTD</b><br/>
+<p>Email:Raykundan57@gmail.com${moto}</p><br/>
+<p>Website:www.dhanifinancial.com</p>
+</div>
+<div class="logo">
+<img src="${filePath}" alt="Lamp" >
+</div>
+</div>
+  <article>
      
-    }
-    .company h2 {
-      letter-spacing: 0px;
-      text-align: center;
-    margin:0;
-    padding:0;
-      color: grey;
-     
-    }
-    p{
-      font-style: normal;
-      margin:0;
-    }
-    
-    /* Your CSS below here */
-    article{
-      background:url(https://i.pinimg.com/564x/56/e3/63/56e363f8db0457bcb61ccebd388b3f84.jpg) no-repeat local;
-      
-      background:url(https://raw.githubusercontent.com/mdn/learning-area/master/css/styling-boxes/letterheaded-paper-start/top-image.png) no-repeat local, url(https://raw.githubusercontent.com/mdn/learning-area/master/css/styling-boxes/letterheaded-paper-start/bottom-image.png) no-repeat 0 100% local, linear-gradient(to bottom, rgba(255, 230, 230, .9), #fff 0%, #fff 100%, rgba(255, 230, 230, .1 ));
-    
-      border-top:0px solid #b30000;
-      border-bottom:0px solid #b30000;
-    }
-    
-    .logo h1{
-      background:url(${header});
-    
-      
-    }
-      </style>
-      <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
-      </head>
-    <body>
-    
-      <article>
-          <div class="logo">
-          <img src="${filePath}" alt="Lamp" >
-    
-          </div>
 
 
 
-        <div class="company">
-            <h1>${title}</h1>
-            <h2>${moto}</h2>
-        </div>
-       <div class="subject">
-      <h4> ${subject}</h4>
-       </div>
-    <div class="content">
-    <p>
-    <p>${first}</p><br>
-    <p>${second}</p><br>
-    <p>${third}</p>
-    </p>
+   
+<div class="ref">
+ <b>
+    Ref:{ref}
+  </b>
+  <b>
+    Aprroval Loan No.:
+  </b>
     </div>
-        <address>
+    <div class="lettername">
+     <U>
+        LOAN  APPROVAL LETTER
+        </U>
+    </div>
+     <div class="date">
+      <h5>
+        DATE:
+      </h5>
+    </div>
         <div>
-          <p>${companyName}</p></div>
-          <div> <p>${location}</div>
-          <div> <p>${contact}</div>
-          <div> <p>${email}</div>
-        </address>
-      </article>
-    </body>`,
-    });
-    console.log(address,'path')
-  }}
+      <h5>
+        To:
+        <br/>{Mr./Ms.}
+      </h5>
+    </div>
+   <div class="subject">
+     <u>
+  <h5> ${subject}</h5>
+   </u>
+   </div>
+    <div>
+     <u>
+  <h5>Greetings From Dhani Finance Pvt. Ltd.</h5>
+   </u>
+   </div>
+     <div>
+
+  <h5>Sir/Madam,</h5>
+
+   </div>
+     <div>
+At the outset we welcome you to the world of DHANI FINANCE PVT LTD. It is my privilage to inform you that an amount of RS> 1,00,000/- only your loan interest rate at 2% yearly to on reducing basis. This is to inform you that your file has come under process positively of which. By mutual fund 10% of Your Loan Amount & You Can Get 10% Cash Back T&C Apply, this offer valid for 24 hours only.
+       <br/>
+       Process Np.:#87678, further you are intimated to get your file registered in DHAN FINANCE PVT LTD so that we can take it into legal consideration and a legal charge of Rs. 1050/- only pay will be charged.
+   </div>
+<br/>
+    <address>
+          <div class="address">
+      <p><u>
+Loan Details.
+          </u> </p>
+  
+   Loan Amoun(Rs:  ${companyName}<br/>
+    Loan Period:  ${location}<br/>
+     Emi(in Rs):${contact}<br/>
+      Loan Transfer a/c:${email}<br/>
+        Ifsc code::${email}        <div><br/>
+        <p color="blue">Your need to pay legal charge Rs.{Charge}/-. Through NEFT/RTCS/Online Banking/UPI in following bank account:</p>
+        <br/>
+      <p>
+        <u>
+Bank Account Details:.
+          </u>
+</p>
+                   <p><b>
+                     DHANI FINANCE PVT LTD.</b>
+                   </p>
+      Account No:-${companyName}<br/>
+      Account No:-${companyName}<br/>
+      Ifsc code:-${companyName}<br/>
+      Bank Name:-${companyName}</div>
+      <div>
+      </div>
+      
+    </address>
+    <div class="note">
+      <p>
+          <u>
+         NOTE- Cash deposited not accepted by company (online transaction needed for your bank account/transaction verification)</u></p>
+     </div>
+     <div class="thanks">
+      <p>
+         NOTE- Cash deposited not accepted by company (online transaction needed for your bank account/transaction verification)</p>
+     </div>
+     <br/>
+     <br/>
+     <div class="sign">
+     <h4>
+Accounting Manager 
+     </h4>
+     <div class="footercall">
+     <p>
+              Head Office:- Plot No-305 Near Tau Devilal Park Prem Nagar, Chandigarh-160014
+     </p>
+   </div>
+   </div>
+  </article>
+</body>`
+      });
+      console.log(address, 'path')
+    }
+  }
 
   const printPDF = async () => {
     const results = await RNHTMLtoPDF.convert({
@@ -387,7 +666,7 @@ const getData =async()=>{
       fileName: 'test',
       base64: true,
     });
-    await RNPrint.print({filePath: results.filePath});
+    await RNPrint.print({ filePath: results.filePath });
   };
 
   const printRemotePDF = async () => {
@@ -426,21 +705,21 @@ const getData =async()=>{
   const cacheToFetch = { cacheName: 'CacheOne', url: filePath }
   // console.log('cached data',cacheToFetch)
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:'#bdd5ff',padding:20}}>
-<ScrollView      contentInsetAdjustmentBehavior="automatic" showsVerticalScrollIndicator={false}>
-<View style={styles.container}>
-        {/* <Image
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#bdd5ff', padding: 20 }}>
+      <ScrollView contentInsetAdjustmentBehavior="automatic" showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          {/* <Image
           source={{
             uri: 'data:image/jpeg;base64,' + filePath.data,
           }}
           style={styles.imageStyle}
         /> */}
-        <Image
-          source={{uri: filePath}}
-          style={styles.imageStyle}
-        />
-        {/* <Text style={styles.textStyle}>{filePath}</Text> */}
-        {/* <TouchableOpacity
+          <Image
+            source={{ uri: filePath }}
+            style={styles.imageStyle}
+          />
+          {/* <Text style={styles.textStyle}>{filePath}</Text> */}
+          {/* <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
           onPress={() => captureImage('photo')}>
@@ -448,7 +727,7 @@ const getData =async()=>{
             Launch Camera for Image
           </Text>
         </TouchableOpacity> */}
-        {/* <TouchableOpacity
+          {/* <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
           onPress={() => captureImage('video')}>
@@ -456,107 +735,107 @@ const getData =async()=>{
             Launch Camera for Video
           </Text>
         </TouchableOpacity> */}
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.buttonStyle}
-          onPress={() => chooseFile('photo')}>
-          <Text style={styles.textStyle}>Choose Logo</Text>
-        </TouchableOpacity>
-     
-        {/* <TouchableOpacity
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.buttonStyle}
+            onPress={() => chooseFile('photo')}>
+            <Text style={styles.textStyle}>Choose Logo</Text>
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity
           activeOpacity={0.5}
           style={styles.buttonStyle}
           onPress={() => chooseFile('video')}>
           <Text style={styles.textStyle}>Choose Video</Text>
         </TouchableOpacity> */}
-      </View>
-<View>
-<TextInput
-mode="outlined"
-label="Logo Link"
-value={filePath}
-onChangeText={text => setFilePath(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Company Name"
-value={title}
-onChangeText={text => setTitle(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Moto "s
-value={moto}
-onChangeText={text => setMoto(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Subject"
-value={subject}
-onChangeText={text => setSubject(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Body First Section"
-value={first}
-multiline={true}
-numberOfLines={7}
-onChangeText={text => setFirst(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Body Second Section"
-value={second}
-multiline={true}
-numberOfLines={7}
-onChangeText={text => setSecond(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Body Third Section"
-value={third}
-multiline={true}
-numberOfLines={7}
-onChangeText={text => setThird(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Company Name"
-value={companyName}
-onChangeText={text => setCompanyName(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Location"
-value={location}
-onChangeText={text => setLocation(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Contact"
-value={contact}
-onChangeText={text => setContact(text)}
-/> 
-<TextInput
-mode="outlined"
-label="Email"
-value={email}
-onChangeText={text => setEmai(text)}
-/> 
-</View>
-
-</ScrollView>
-
-
-
-
-        {Platform.OS === 'ios' && customOptions()}
-     <View>
-        <TouchableHighlight  onPress={printHTML} style={{width:'100%',minHeight:60, borderRadius:50,backgroundColor:'#478aff',alignItems:'center',padding:20}}>
-          <Text style={{textAlignVertical:'center',fontSize:20,color:'white',fontWeight:"500"}}>{!success&&`Confirm`}{success&&`save`}</Text>
-        </TouchableHighlight>
         </View>
-       
+        <View>
+          <TextInput
+            mode="outlined"
+            label="Logo Link"
+            value={filePath}
+            onChangeText={text => setFilePath(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Company Name"
+            value={title}
+            onChangeText={text => setTitle(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Moto " s
+            value={moto}
+            onChangeText={text => setMoto(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Subject"
+            value={subject}
+            onChangeText={text => setSubject(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Body First Section"
+            value={first}
+            multiline={true}
+            numberOfLines={7}
+            onChangeText={text => setFirst(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Body Second Section"
+            value={second}
+            multiline={true}
+            numberOfLines={7}
+            onChangeText={text => setSecond(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Body Third Section"
+            value={third}
+            multiline={true}
+            numberOfLines={7}
+            onChangeText={text => setThird(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Company Name"
+            value={companyName}
+            onChangeText={text => setCompanyName(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Location"
+            value={location}
+            onChangeText={text => setLocation(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Contact"
+            value={contact}
+            onChangeText={text => setContact(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Email"
+            value={email}
+            onChangeText={text => setEmai(text)}
+          />
+        </View>
+
+      </ScrollView>
+
+
+
+
+      {Platform.OS === 'ios' && customOptions()}
+      <View>
+        <TouchableHighlight onPress={printHTML} style={{ width: '100%', minHeight: 60, borderRadius: 50, backgroundColor: '#478aff', alignItems: 'center', padding: 20 }}>
+          <Text style={{ textAlignVertical: 'center', fontSize: 20, color: 'white', fontWeight: "500" }}>{!success && `Confirm`}{success && `save`}</Text>
+        </TouchableHighlight>
+      </View>
+
     </SafeAreaView>
   );
 };
