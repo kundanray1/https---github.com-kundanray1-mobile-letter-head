@@ -54,6 +54,7 @@ border-radius:15px;
  justify-content:space-evenly;
  align-content:center;
  text-align:center;
+ margin-vertical:5px;
  align-item:center;
 
   
@@ -130,7 +131,7 @@ const OverLay = styled.KeyboardAvoidingView`
   justify-content: center;
   align-items: center;
   padding: 25px 0px;
-  background: rgba(200, 200, 200, 0.45);
+  background: rgba(200, 200, 100, 0.45);
 `;
 
 const GroupWrapper = styled.View`

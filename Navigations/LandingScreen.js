@@ -13,8 +13,13 @@ import { Button, TextInput } from 'react-native-paper';
 import { Card,PressableStyled,TextDesc,TextSmall,TitleText } from '../Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-
-
+import Share from 'react-native-share';
+import DocumentPicker, {
+  DirectoryPickerResponse,
+  DocumentPickerResponse,
+  isInProgress,
+  types,
+} from 'react-native-document-picker'
 const LandingScreen = ({navigation,props}) => {
   const [loading,setLoading]= useState(false);
   const [selectedPrinter, setSelectedPrinter] = useState(null);
@@ -31,10 +36,14 @@ const LandingScreen = ({navigation,props}) => {
   const [second,setSecond]= useState('');
   const [third,setThird]= useState('');
   const [data,setData]=useState([null]);
+  const [result,setResult]=useState();
   useEffect(() => {
-    getData();
-     
-    }, [])
+     const unsubscribe = navigation.addListener('focus', () => {
+     getData();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
     const getData = async()=>{
       try {
         const value = JSON.parse(await AsyncStorage.getItem('title'))
@@ -63,7 +72,27 @@ const LandingScreen = ({navigation,props}) => {
     
     }
     
+const sharePdf=async()=>{
+  try {
+    const pickerResult = await DocumentPicker.pickSingle({
+      presentationStyle: 'fullScreen',
+      copyTo: 'cachesDirectory',
+    })
+    console.log(JSON.stringify(pickerResult.fileCopyUri),'string value');
+    setResult(JSON.stringify(pickerResult.fileCopyUri))
+    console.log(JSON.stringify(result))
+    Share.open({
+      title: "This is my report ",
+      message: "Message:",
+      url: result,
+      subject: "Report",
+  })
+  } catch (e) {
+    handleError(e)
+  }
 
+
+}
   return (
       <View style={{flex:1}}>
         <ScrollView>
@@ -92,12 +121,22 @@ const LandingScreen = ({navigation,props}) => {
 
 </ScrollView>
 <Card >
-{data&&<PressableStyled onPress={()=>{console.log('hi');navigation.navigate('Form',{item:data,fresh:true})}}>
+<PressableStyled   style={{backgroundColor:'blue'}} onPress={sharePdf}>
+  <TextSmall>
+  Share
+  </TextSmall>
+</PressableStyled>
+{data&&
+<>
+<PressableStyled onPress={()=>{console.log('hi');navigation.navigate('Form',{item:data,fresh:true})}}>
   <TextSmall>
     Add Organization
   </TextSmall>
-</PressableStyled>}
-{!data&&<PressableStyled onPress={()=>navigation.navigate('Form',{fresh:true})}>
+</PressableStyled>
+
+</>
+}
+{!data&&<PressableStyled onPress={()=>navigation.navigate('Form',{item:data,fresh:true})}>
   <TextSmall>
     Add Organization
   </TextSmall>

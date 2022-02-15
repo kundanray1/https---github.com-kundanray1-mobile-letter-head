@@ -47,11 +47,12 @@ const Form = ({ route, navigation }) => {
  const [success,setSuccess]= useState(false);
 // const [image,setImage]= useState(require(filePath));
 const { item,fresh } = route.params;
-// useEffect(() => {
-//    console.log('hi')
-// getData();
+useEffect(() => {
+  
+   console.log('hi')
+getData();
 
-// }, [loading])s
+}, [loading])
 
 const [data,setData]=useState(item);
 console.log(data,'old values from older screen')
@@ -65,18 +66,18 @@ const getData =async()=>{
       // value previously stored
 // console.log(item,'old values')
 
-      setTitle(item.title);
-      setMoto(item.moto);
-      setCompanyName(item.company);
-      setSubject(item.subject);
-      setBody(item.body);
-      setLocation(item.location);
-      setContact(item.contact);
-      setEmai(item.email);
-      setFirst(item.first);
-      setSecond(item.second);
-      setThird(item.third);
-      setFilePath(item.path)
+      setTitle(data.title);
+      setMoto(data.moto);
+      setCompanyName(data.company);
+      setSubject(data.subject);
+      setBody(data.body);
+      setLocation(data.location);
+      setContact(data.contact);
+      setEmai(data.email);
+      setFirst(data.first);
+      setSecond(data.second);
+      setThird(data.third);
+      setFilePath(data.path)
 
     }
   } catch(e) {
@@ -185,18 +186,20 @@ const getData =async()=>{
     });
   };
 
-  const printHTML = async () => {
+  const printHTML = async() => {
     let formdata=[{title:title, moto:moto,company:companyName,subject:subject,body:body,location:location, contact:contact,email:email, first:first,second:second,third:third,path:filePath}]
-   let value = await JSON.stringify(formdata)
+  //  let value = await JSON.stringify(formdata)
   //  setData(formdata);
-   console.log(formdata,'checking passed data')
-  let concated=[...data,...formdata]
+   console.log(data,'previous value')
+  if(fresh){
+    
+    let concated= data==null?formdata:[...data,...formdata]
     setData(concated)
    
    
    console.log(JSON.stringify(data),'concated')
-   
-    AsyncStorage.setItem('title',JSON.stringify(data), (err)=> {
+
+    await AsyncStorage.setItem('title',JSON.stringify(data), (err)=> {
       if(err){
         console.log("an error");
         throw err;
@@ -205,13 +208,13 @@ const getData =async()=>{
       setSuccess(true);
     }).catch((err)=> {
         console.log("error is: " + err);
-    });
+    });}
 
 
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
     const read =  await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
-console.log(granted,'check permission')
-    if(success){await RNPrint.print({
+// console.log(granted,'check permission')
+    if(success||!fresh){ let address=RNPrint.print({
       html:`
       <head>
       <title>Pdf Content</title>
@@ -375,6 +378,7 @@ console.log(granted,'check permission')
       </article>
     </body>`,
     });
+    console.log(address,'path')
   }}
 
   const printPDF = async () => {
@@ -547,11 +551,12 @@ onChangeText={text => setEmai(text)}
 
 
         {Platform.OS === 'ios' && customOptions()}
-      <View>
+     <View>
         <TouchableHighlight  onPress={printHTML} style={{width:'100%',minHeight:60, borderRadius:50,backgroundColor:'#478aff',alignItems:'center',padding:20}}>
-          <Text style={{textAlignVertical:'center',fontSize:20,color:'white',fontWeight:"500"}}>Create PDF</Text>
+          <Text style={{textAlignVertical:'center',fontSize:20,color:'white',fontWeight:"500"}}>{!success&&`Confirm`}{success&&`save`}</Text>
         </TouchableHighlight>
         </View>
+       
     </SafeAreaView>
   );
 };
