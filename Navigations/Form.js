@@ -33,7 +33,7 @@ const Form = ({ route, navigation }) => {
   const [selectedPrinter, setSelectedPrinter] = useState(null);
   const [title, setTitle] = useState('');
   const [moto, setMoto] = useState('');
-  const [filePath, setFilePath] = useState('https://ml8qg8gly5yz.i.optimole.com/ob22pAI-ELoYPrSx/w:100/h:100/q:auto/rt:fill/g:ce/https://nepalsouq.com/wp-content/uploads/2021/05/cropped-Asset-1-e1621914238173.png');
+  const [filePath, setFilePath] = useState('https://www.signsofttech.com/wp-content/uploads/2022/02/dhani.jpeg');
   const [companyName, setCompanyName] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
@@ -43,22 +43,39 @@ const Form = ({ route, navigation }) => {
   const [first, setFirst] = useState('');
   const [second, setSecond] = useState('');
   const [third, setThird] = useState('');
-  const [newdata, setNewdata] = useState([]);
+  const [ref, setRef] = useState();
+  const [approval, setApproval] = useState();
+  const [date, setDate] = useState();
+  const [process, setProcess] = useState();
+  const [charge, setCharge] = useState();
+  const [emi, setEmi] = useState();
+  const [period, setPeriod] = useState();
+  const [loan, setLoan] = useState();
+  const [transferaccount, setLoantransfer] = useState();
+  const [ifsc, setIfsc] = useState();
+  const [loanamount, setLoanamount] = useState();
+  const [bankname, setBankname] = useState();
+  const [mr, setMr] = useState();
+const [accountno,setAccountno] = useState();
   const [success, setSuccess] = useState(false);
-  // const [image,setImage]= useState(require(filePath));
+  const[upi,setUpi]=useState();
+  const[interestrate,setInterestrate]=useState();
   const { item, fresh } = route.params;
+  const [data, setData] = useState(item);
+  // const [image,setImage]= useState(require(filePath));
   useEffect(() => {
 
-    console.log('hi')
-    getData();
+   if(!fresh){ console.log('hi')
+    getData();}
 
   }, [loading])
 
-  const [data, setData] = useState(item);
-  console.log(data, 'old values from older screen')
+
+  // console.log(data, 'old values from older screen')
 
   // console.log(item.moto,'tramsfered data')
   const getData = async () => {
+    
     console.log(fresh, 'passed fresh value')
     try {
       if (!fresh) {
@@ -66,18 +83,32 @@ const Form = ({ route, navigation }) => {
         // value previously stored
         // console.log(item,'old values')
 
-        setTitle(data.title);
-        setMoto(data.moto);
-        setCompanyName(data.company);
+        // setTitle(data.title);
+        // setMoto(data.moto);
+        // setCompanyName(data.company);
+        // setSubject(data.subject);
+        // setBody(data.body);
+        // setLocation(data.location);
+        // setContact(data.contact);
+        // setEmai(data.email);
+        // setFirst(data.first);
+        // setSecond(data.second);
+        // setThird(data.third);
+        // setFilePath(data.path)
+        setRef(data.ref);
+        setMr(data.mr);
+        setApproval(data.approval);
+        setDate(data.date);
         setSubject(data.subject);
-        setBody(data.body);
-        setLocation(data.location);
-        setContact(data.contact);
-        setEmai(data.email);
-        setFirst(data.first);
-        setSecond(data.second);
-        setThird(data.third);
-        setFilePath(data.path)
+        setProcess(data.process);
+        setLoan(data.loan);
+        setPeriod(data.period);
+        setEmai(data.emi);
+        setLoantransfer(data.transferaccount);
+        setIfsc(data.ifsc);
+        setCharge(data.charge);
+        setAccountno(data.accountno);
+        setBankname(data.bankname);
 
       }
     } catch (e) {
@@ -85,7 +116,71 @@ const Form = ({ route, navigation }) => {
     }
 
   }
+const setValue=()=>{
+  setDhani([{ref:ref,approval:approval,mr:mr,date:date,subject:subject,process:process,loan:loan,period:period,emi:emi,transferaccount:transferaccount,ifsc:ifsc,charge:charge,accountno:accountno,bankname:bankname,upi:upi,interestrate:interestrate}])
+return (null)
+}
 
+
+
+const savedoc= async() =>{
+  // setDhani([{ref:ref,approval:approval,mr:mr,date:date,subject:subject,process:process,loan:loan,period:period,emi:emi,transferaccount:transferaccount,ifsc:ifsc,charge:charge,accountno:accountno,bankname:bankname,upi:upi,interestrate:interestrate}])
+
+  // let dhani = [{ref:ref,approval:approval,mr:mr,date:date,subject:subject,process:process,loan:loan,period:period,emi:emi,transferaccount:transferaccount,ifsc:ifsc,charge:charge,accountno:accountno,bankname:bankname,upi:upi,interestrate:interestrate}]
+  // // let formdata = [{ title: title, moto: moto, company: companyName, subject: subject, body: body, location: location, contact: contact, email: email, first: first, second: second, third: third, path: filePath }]
+
+  // //  let value = await JSON.stringify(formdata)
+  // //  setData(formdata);
+  // console.log(data, 'previous value')
+  // if (fresh) {
+
+  //   const concated = data==null ? dhani : [...data, ...dhani]
+  //   setData(concated)
+
+
+  //   console.log(JSON.stringify(data), 'concated')
+
+  //   await AsyncStorage.setItem('title', JSON.stringify(data), (err) => {
+  //     if (err) {
+  //       console.log("an error");
+  //       throw err;
+  //     }
+     
+  //   }).catch((err) => {
+  //     console.log("error is: " + err);
+  //   });
+  //   console.log("success");
+  //   if(dhani!=data){
+  //     setSuccess(true)
+  //   }
+  // }
+  return(success);
+
+}
+
+const shareAndSave= async() =>{
+  
+    try {
+      const pickerResult = await DocumentPicker.pickSingle({
+        presentationStyle: 'fullScreen',
+        copyTo: 'cachesDirectory',
+      })
+      console.log(JSON.stringify(pickerResult.fileCopyUri),'string value');
+      setResult(JSON.stringify(pickerResult.fileCopyUri))
+      console.log(JSON.stringify(result))
+      Share.open({
+        title: "This is my report ",
+        message: "Message:",
+        url: result,
+        subject: "Report",
+    })
+    } catch (e) {
+      handleError(e)
+    }
+  
+  
+  
+}
 
   const requestCameraPermission = async () => {
     if (Platform.OS === 'android') {
@@ -187,30 +282,34 @@ const Form = ({ route, navigation }) => {
   };
 
   const printHTML = async () => {
-    let formdata = [{ title: title, moto: moto, company: companyName, subject: subject, body: body, location: location, contact: contact, email: email, first: first, second: second, third: third, path: filePath }]
+    let dhani = [{ref:ref,approval:approval,mr:mr,date:date,subject:subject,process:process,loan:loan,period:period,emi:emi,transferaccount:transferaccount,ifsc:ifsc,charge:charge,accountno:accountno,bankname:bankname,upi:upi,interestrate:interestrate}]
+    // let formdata = [{ title: title, moto: moto, company: companyName, subject: subject, body: body, location: location, contact: contact, email: email, first: first, second: second, third: third, path: filePath }]
+  
     //  let value = await JSON.stringify(formdata)
     //  setData(formdata);
     console.log(data, 'previous value')
     if (fresh) {
-
-      let concated = data == null ? formdata : [...data, ...formdata]
+  
+      const concated = data==null ? dhani : [...data, ...dhani]
       setData(concated)
-
-
+  
+  
       console.log(JSON.stringify(data), 'concated')
-
+  
       await AsyncStorage.setItem('title', JSON.stringify(data), (err) => {
         if (err) {
           console.log("an error");
           throw err;
         }
-        console.log("success");
-        setSuccess(true);
+       
       }).catch((err) => {
         console.log("error is: " + err);
       });
+      console.log("success");
+      if(dhani!=data){
+        setSuccess(true)
+      }
     }
-
 
     const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
     const read = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
@@ -463,8 +562,8 @@ justify-content: space-between;
 .logo img {
   top: 2mm;
   left: 10mm;
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 75px;
   font-size: 20px;
   letter-spacing: 0px;
   text-align: center;
@@ -474,6 +573,18 @@ justify-content: space-between;
 }
 .sign{
   color:#c6db02;
+}
+.line{
+// border-color:#2baeff;
+// border:dashed;
+border-radius:10px;
+height:2px;
+background:#2baeff;
+margin-top:10px;
+elevation:15;
+
+
+
 }
 .header{
   display:flex;
@@ -555,15 +666,15 @@ DHANA FINANCE PVT LTD</b><br/>
   <article>
      
 
-
+<div class="line"></div>
 
    
 <div class="ref">
  <b>
-    Ref:{ref}
+    Ref:${ref}
   </b>
   <b>
-    Aprroval Loan No.:
+    Aprroval Loan No.:${approval}
   </b>
     </div>
     <div class="lettername">
@@ -573,13 +684,13 @@ DHANA FINANCE PVT LTD</b><br/>
     </div>
      <div class="date">
       <h5>
-        DATE:
+        DATE:${date}
       </h5>
     </div>
         <div>
       <h5>
         To:
-        <br/>{Mr./Ms.}
+        <br/>Mr./Ms./Mrs. ${mr}
       </h5>
     </div>
    <div class="subject">
@@ -598,9 +709,9 @@ DHANA FINANCE PVT LTD</b><br/>
 
    </div>
      <div>
-At the outset we welcome you to the world of DHANI FINANCE PVT LTD. It is my privilage to inform you that an amount of RS> 1,00,000/- only your loan interest rate at 2% yearly to on reducing basis. This is to inform you that your file has come under process positively of which. By mutual fund 10% of Your Loan Amount & You Can Get 10% Cash Back T&C Apply, this offer valid for 24 hours only.
+At the outset we welcome you to the world of DHANI FINANCE PVT LTD. It is my privilage to inform you that an amount of RS. ${loan}/- only your loan interest rate at ${interestrate} yearly to on reducing basis. This is to inform you that your file has come under process positively of which. By mutual fund 10% of Your Loan Amount & You Can Get 10% Cash Back T&C Apply, this offer valid for 24 hours only.
        <br/>
-       Process Np.:#87678, further you are intimated to get your file registered in DHAN FINANCE PVT LTD so that we can take it into legal consideration and a legal charge of Rs. 1050/- only pay will be charged.
+       Process No.:${process}, further you are intimated to get your file registered in DHAN FINANCE PVT LTD so that we can take it into legal consideration and a legal charge of Rs.${charge}/- only pay will be charged.
    </div>
 <br/>
     <address>
@@ -609,12 +720,12 @@ At the outset we welcome you to the world of DHANI FINANCE PVT LTD. It is my pri
 Loan Details.
           </u> </p>
   
-   Loan Amoun(Rs:  ${companyName}<br/>
-    Loan Period:  ${location}<br/>
-     Emi(in Rs):${contact}<br/>
-      Loan Transfer a/c:${email}<br/>
-        Ifsc code::${email}        <div><br/>
-        <p color="blue">Your need to pay legal charge Rs.{Charge}/-. Through NEFT/RTCS/Online Banking/UPI in following bank account:</p>
+   Loan Amoun(in Rs):  ${loan}<br/>
+    Loan Period:  ${period}<br/>
+     Emi(in Rs):${emi}<br/>
+      Loan Transfer a/c:${transferaccount}<br/>
+        Ifsc code::${ifsc}        <div><br/>
+        <p color="blue">Your need to pay legal charge Rs.${charge}/-. Through NEFT/RTCS/Online Banking/UPI in following bank account:</p>
         <br/>
       <p>
         <u>
@@ -624,10 +735,10 @@ Bank Account Details:.
                    <p><b>
                      DHANI FINANCE PVT LTD.</b>
                    </p>
-      Account No:-${companyName}<br/>
-      Account No:-${companyName}<br/>
-      Ifsc code:-${companyName}<br/>
-      Bank Name:-${companyName}</div>
+      Upi No.:-${upi}<br/>
+      Account No:-${accountno}<br/>
+      Ifsc code:-${ifsc}<br/>
+      Bank Name:-${bankname}</div>
       <div>
       </div>
       
@@ -758,69 +869,101 @@ Accounting Manager
           />
           <TextInput
             mode="outlined"
-            label="Company Name"
-            value={title}
-            onChangeText={text => setTitle(text)}
+            label="To"
+            value={mr}
+            onChangeText={text => setMr(text)}
           />
           <TextInput
             mode="outlined"
-            label="Moto " s
-            value={moto}
-            onChangeText={text => setMoto(text)}
+            label="Ref " s
+            value={ref}
+            onChangeText={text => setRef(text)}
           />
           <TextInput
             mode="outlined"
-            label="Subject"
-            value={subject}
-            onChangeText={text => setSubject(text)}
+            label="Approval No."
+            value={approval}
+            onChangeText={text => setApproval(text)}
           />
           <TextInput
             mode="outlined"
-            label="Body First Section"
-            value={first}
+            label="Date"
+            value={date}
+            onChangeText={text => setDate(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Loan Amount"
+            value={loan}
             multiline={true}
             numberOfLines={7}
-            onChangeText={text => setFirst(text)}
+            onChangeText={text => setLoan(text)}
           />
           <TextInput
             mode="outlined"
-            label="Body Second Section"
-            value={second}
+            label="Process No."
+            value={process}
             multiline={true}
             numberOfLines={7}
-            onChangeText={text => setSecond(text)}
+            onChangeText={text => setProcess(text)}
           />
           <TextInput
             mode="outlined"
-            label="Body Third Section"
-            value={third}
+            label="Charge"
+            value={charge}
             multiline={true}
             numberOfLines={7}
-            onChangeText={text => setThird(text)}
+            onChangeText={text => setCharge(text)}
           />
           <TextInput
             mode="outlined"
-            label="Company Name"
-            value={companyName}
-            onChangeText={text => setCompanyName(text)}
+            label="Interest Rate"
+            value={interestrate}
+            multiline={true}
+            numberOfLines={7}
+            onChangeText={text => setInterestrate(text)}
           />
           <TextInput
             mode="outlined"
-            label="Location"
-            value={location}
-            onChangeText={text => setLocation(text)}
+            label="Loan Period"
+            value={period}
+            onChangeText={text => setPeriod(text)}
           />
           <TextInput
             mode="outlined"
-            label="Contact"
-            value={contact}
-            onChangeText={text => setContact(text)}
+            label="Emi Amount"
+            value={emi}
+            onChangeText={text => setEmi(text)}
           />
           <TextInput
             mode="outlined"
-            label="Email"
-            value={email}
-            onChangeText={text => setEmai(text)}
+            label="Transfer Account"
+            value={transferaccount}
+            onChangeText={text => setLoantransfer(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Ifsc"
+            value={ifsc}
+            onChangeText={text => setIfsc(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Account No."
+            value={accountno}
+            onChangeText={text => setAccountno(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="UPI No."
+            value={upi}
+            onChangeText={text => setUpi(text)}
+          />
+          <TextInput
+            mode="outlined"
+            label="Bank Name"
+            value={bankname}
+            onChangeText={text => setBankname(text)}
           />
         </View>
 
@@ -830,10 +973,13 @@ Accounting Manager
 
 
       {Platform.OS === 'ios' && customOptions()}
-      <View>
-        <TouchableHighlight onPress={printHTML} style={{ width: '100%', minHeight: 60, borderRadius: 50, backgroundColor: '#478aff', alignItems: 'center', padding: 20 }}>
-          <Text style={{ textAlignVertical: 'center', fontSize: 20, color: 'white', fontWeight: "500" }}>{!success && `Confirm`}{success && `save`}</Text>
+      <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+        <TouchableHighlight onPress={printHTML} disabled={success?false:false} style={{ width: '90%', minHeight: 60, borderRadius: 50, backgroundColor: success?'gray':'#478aff', alignItems: 'center', padding: 20 }}>
+          <Text style={{ textAlignVertical: 'center', fontSize: 20, color: 'white', fontWeight: "500" }}>{!success && `Confirm`}{success && `Save and print`}</Text>
         </TouchableHighlight>
+        {/* <TouchableHighlight onPress={printHTML} style={{ width: '50%', minHeight: 60, borderRadius: 50, backgroundColor: '#478aff', alignItems: 'center', padding: 20 }}>
+          <Text style={{ textAlignVertical: 'center', fontSize: 20, color: 'white', fontWeight: "500" }}>{!success && `Print`}{success && `save`}</Text>
+        </TouchableHighlight> */}
       </View>
 
     </SafeAreaView>

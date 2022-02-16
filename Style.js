@@ -98,7 +98,7 @@ padding-horizontal:10px;
   font-size:18px;
   font-weight:400;
   text-align:left;
-  color:gray;
+  color:black;
 
 `;
 

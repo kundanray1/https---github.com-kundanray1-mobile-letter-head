@@ -96,23 +96,26 @@ const sharePdf=async()=>{
   return (
       <View style={{flex:1}}>
         <ScrollView>
-<Card>
-  <TitleText>
-    Organisations
+<Card style={{backgroundColor:"blue"}}>
+  <TitleText style={{color:'white'}}>
+    List of Loans
   </TitleText>
   </Card>
   
   {data&&data.map((item,i)=>{return(
-    <TouchableOpacity  key={i} style={{backgroundColor:'white',margin:15,borderRadius:15,padding:10,elevation:1}} onPress={()=>navigation.navigate('Form',{item:item,fresh:false} )}>
+    <TouchableOpacity  key={i} style={{backgroundColor:'#bdd5ff',margin:15,borderRadius:15,padding:10,elevation:1}} onPress={()=>navigation.navigate('Form',{item:item,fresh:false} )}>
 
   <TextDesc>
-   Name Of Company:{data[0]?item.title:'hello'}
+   Ref No.:{data[0]?item.ref:'hello'}
   </TextDesc>
   <TextDesc>
-  Email:{data[0]?item.email:'hello'}
+  Approval No.:{data[0]?item.approval:'hello'}
   </TextDesc>
   <TextDesc>
-  Phone:{data[0]?item.contact:'hello'}
+  Name Of Receiver:{data[0]?item.mr:'hello'}
+  </TextDesc>
+  <TextDesc>
+  Date:{data[0]?item.date:'hello'}
   </TextDesc>
 
 
@@ -130,7 +133,7 @@ const sharePdf=async()=>{
 <>
 <PressableStyled onPress={()=>{console.log('hi');navigation.navigate('Form',{item:data,fresh:true})}}>
   <TextSmall>
-    Add Organization
+    Add Item
   </TextSmall>
 </PressableStyled>
 
@@ -138,7 +141,7 @@ const sharePdf=async()=>{
 }
 {!data&&<PressableStyled onPress={()=>navigation.navigate('Form',{item:data,fresh:true})}>
   <TextSmall>
-    Add Organization
+    Add Item
   </TextSmall>
 </PressableStyled>}
 </Card>
